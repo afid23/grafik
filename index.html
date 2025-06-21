@@ -9,7 +9,7 @@
 
   <script>
     // Ambil data dari Firebase Realtime Database (ganti URL dan path sesuai)
-    fetch("https://myapp-b8e6f-default-rtdb.asia-southeast1.firebasedatabase.app/monitoring_tubuh/line1/history.json")
+    fetch("https://myapp-b8e6f-default-rtdb.asia-southeast1.firebasedatabase.app/monitoring_tubuh/line1/history.json?orderBy=\"$key\"&limitToLast=20")
       .then(response => response.json())
       .then(data => {
         const labels = [];
