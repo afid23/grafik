@@ -2,11 +2,32 @@
 <html>
 <head>
   <title>Grafik Suhu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #chart-container {
+      width: 100vw;
+      height: 60vh;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
 </head>
 <body>
 
-  <canvas id="myChart" width="200" height="200"></canvas>
+  <div id="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
 
   <script>
     const ctx = document.getElementById('myChart').getContext('2d');
@@ -25,6 +46,7 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         animation: false,
         scales: {
           x: {
@@ -45,7 +67,7 @@
           const values = [];
 
           for (const key in data) {
-            labels.push(data[key].waktu.split(" ")[1]);
+            labels.push(data[key].waktu.split(" ")[1]); // hanya jam
             values.push(data[key].suhu);
           }
 
@@ -55,8 +77,9 @@
         });
     }
 
-    ambilData(); // Muat pertama
-    setInterval(ambilData, 3000); // Update setiap 5 detik
+    ambilData();
+    setInterval(ambilData, 3000);
   </script>
+
 </body>
 </html>
