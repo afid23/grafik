@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grafik Suhu Real-time</title>
+  <title>Grafik Suhu</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h2>Grafik Suhu</h2>
+  <!-- HAPUS <h2>Grafik Suhu</h2> -->
+
   <canvas id="myChart" width="400" height="200"></canvas>
 
   <script>
@@ -18,7 +19,9 @@
           label: 'Suhu (°C)',
           data: [],
           borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
+          tension: 0.1,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgba(75,192,192,1)'
         }]
       },
       options: {
@@ -36,7 +39,7 @@
     });
 
     function ambilData() {
-      fetch("https://myapp-b8e6f-default-rtdb.asia-southeast1.firebasedatabase.app/monitoring_tubuh/line1/history.json?orderBy=\"$key\"&limitToLast=50")
+      fetch("https://myapp-b8e6f-default-rtdb.asia-southeast1.firebasedatabase.app/monitoring_tubuh/line1/history.json?orderBy=\"$key\"&limitToLast=30")
         .then(response => response.json())
         .then(data => {
           const labels = [];
@@ -53,8 +56,8 @@
         });
     }
 
-    ambilData(); // Load pertama kali
-    setInterval(ambilData, 5000); // Update tiap 5 detik
+    ambilData(); // Muat pertama
+    setInterval(ambilData, 5000); // Update setiap 5 detik
   </script>
 </body>
 </html>
