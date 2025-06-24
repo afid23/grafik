@@ -68,7 +68,7 @@
 
           for (const key in data) {
             labels.push(data[key].waktu.split(" ")[1]); // hanya jam
-            values.push(data[key].suhu);
+            values.push(data[key].emg);
           }
 
           chart.data.labels = labels;
