@@ -15,7 +15,7 @@
     .card-info {
       max-width: 300px;
       margin: 20px auto 10px auto;
-      padding: 20px;
+      padding: 16px;
       background: linear-gradient(135deg, #38b2ac, #319795);
       color: white;
       border-radius: 14px;
@@ -27,7 +27,7 @@
       font-size: 16px;
       font-weight: 500;
       margin-bottom: 8px;
-      opacity: 0.9;
+      opacity: 0.95;
     }
 
     .judul-emg {
@@ -58,7 +58,7 @@
 <body>
 
   <div class="card-info">
-    <div class="tanggal" id="tanggal">-</div>
+    <div class="tanggal" id="tanggal">📅 Date: -</div>
     <div class="judul-emg">EMG</div>
     <div class="nilai-emg" id="emg-terbaru">-</div>
   </div>
@@ -127,7 +127,7 @@
 
           // Tampilkan tanggal dan EMG terbaru
           if (tanggal) {
-            tanggalElem.textContent = tanggal;
+            tanggalElem.textContent = `📅 Date: ${tanggal}`;
           }
           if (lastEmg !== null) {
             emgElem.textContent = lastEmg;
