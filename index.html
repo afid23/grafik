@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grafik Suhu</title>
+  <title>Grafik EMG</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -13,32 +13,26 @@
     }
 
     .card-info {
-      max-width: 400px;
+      max-width: 300px;
       margin: 20px auto 10px auto;
-      padding: 15px 20px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      background: linear-gradient(135deg, #38b2ac, #319795);
+      color: white;
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
 
-    .calendar-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
+    .judul-emg {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .nilai-emg {
+      font-size: 28px;
       font-weight: bold;
-      color: #333;
-      margin-bottom: 8px;
-    }
-
-    .calendar-line span {
-      margin-left: 8px;
-    }
-
-    #judul-emg {
-      font-size: 16px;
-      color: #555;
     }
 
     #chart-container {
@@ -57,10 +51,8 @@
 <body>
 
   <div class="card-info">
-    <div class="calendar-line">
-      📅 <span id="tanggal">Date: -</span>
-    </div>
-    <div id="judul-emg">EMG</div>
+    <div class="judul-emg">EMG</div>
+    <div class="nilai-emg" id="emg-terbaru">-</div>
   </div>
 
   <div id="chart-container">
@@ -68,7 +60,7 @@
   </div>
 
   <script>
-    const tanggalElem = document.getElementById('tanggal');
+    const emgElem = document.getElementById('emg-terbaru');
 
     const ctx = document.getElementById('myChart').getContext('2d');
     const chart = new Chart(ctx, {
@@ -105,19 +97,21 @@
         .then(data => {
           const labels = [];
           const values = [];
-          let tanggal = null;
+
+          let lastEmg = null;
 
           for (const key in data) {
             const waktu = data[key].waktu;
-            if (!tanggal) {
-              tanggal = waktu.split(" ")[0]; // Ambil tanggal
-            }
-            labels.push(waktu.split(" ")[1]); // Hanya jam
-            values.push(data[key].emg);
+            const emg = data[key].emg;
+
+            labels.push(waktu.split(" ")[1]); // jam saja
+            values.push(emg);
+
+            lastEmg = emg; // ambil nilai terakhir
           }
 
-          if (tanggal) {
-            tanggalElem.textContent = "Date: " + tanggal;
+          if (lastEmg !== null) {
+            emgElem.textContent = lastEmg;
           }
 
           chart.data.labels = labels;
