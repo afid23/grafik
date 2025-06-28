@@ -8,11 +8,42 @@
     body {
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .card-info {
+      max-width: 400px;
+      margin: 20px auto 10px auto;
+      padding: 15px 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    .calendar-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .calendar-line span {
+      margin-left: 8px;
+    }
+
+    #judul-emg {
+      font-size: 16px;
+      color: #555;
     }
 
     #chart-container {
       width: 100vw;
-      height: 90vh;
+      height: 80vh;
       padding: 10px;
       box-sizing: border-box;
     }
@@ -25,11 +56,20 @@
 </head>
 <body>
 
+  <div class="card-info">
+    <div class="calendar-line">
+      📅 <span id="tanggal">Date: -</span>
+    </div>
+    <div id="judul-emg">EMG</div>
+  </div>
+
   <div id="chart-container">
     <canvas id="myChart"></canvas>
   </div>
 
   <script>
+    const tanggalElem = document.getElementById('tanggal');
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const chart = new Chart(ctx, {
       type: 'line',
@@ -65,10 +105,19 @@
         .then(data => {
           const labels = [];
           const values = [];
+          let tanggal = null;
 
           for (const key in data) {
-            labels.push(data[key].waktu.split(" ")[1]); // hanya jam
+            const waktu = data[key].waktu;
+            if (!tanggal) {
+              tanggal = waktu.split(" ")[0]; // Ambil tanggal
+            }
+            labels.push(waktu.split(" ")[1]); // Hanya jam
             values.push(data[key].emg);
+          }
+
+          if (tanggal) {
+            tanggalElem.textContent = "Date: " + tanggal;
           }
 
           chart.data.labels = labels;
