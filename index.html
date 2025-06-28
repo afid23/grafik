@@ -23,6 +23,13 @@
       text-align: center;
     }
 
+    .tanggal {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
     .judul-emg {
       font-size: 24px;
       font-weight: 600;
@@ -51,6 +58,7 @@
 <body>
 
   <div class="card-info">
+    <div class="tanggal" id="tanggal">-</div>
     <div class="judul-emg">EMG</div>
     <div class="nilai-emg" id="emg-terbaru">-</div>
   </div>
@@ -60,6 +68,7 @@
   </div>
 
   <script>
+    const tanggalElem = document.getElementById('tanggal');
     const emgElem = document.getElementById('emg-terbaru');
 
     const ctx = document.getElementById('myChart').getContext('2d');
@@ -99,21 +108,32 @@
           const values = [];
 
           let lastEmg = null;
+          let tanggal = null;
 
           for (const key in data) {
             const waktu = data[key].waktu;
             const emg = data[key].emg;
 
-            labels.push(waktu.split(" ")[1]); // jam saja
-            values.push(emg);
+            const [tgl, jam] = waktu.split(" ");
 
-            lastEmg = emg; // ambil nilai terakhir
+            if (!tanggal) {
+              tanggal = tgl;
+            }
+
+            labels.push(jam);
+            values.push(emg);
+            lastEmg = emg;
           }
 
+          // Tampilkan tanggal dan EMG terbaru
+          if (tanggal) {
+            tanggalElem.textContent = tanggal;
+          }
           if (lastEmg !== null) {
             emgElem.textContent = lastEmg;
           }
 
+          // Update grafik
           chart.data.labels = labels;
           chart.data.datasets[0].data = values;
           chart.update();
