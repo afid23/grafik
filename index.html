@@ -13,9 +13,9 @@
     }
 
     .card-info {
-      width: calc(100% - 32px); /*
+      width: calc(100% - 32px); /* agar melebar dengan padding */
       max-width: 100%;
-      margin: 10px auto 0px auto;
+      margin: 20px auto 16px auto; /* 16px jarak ke grafik */
       padding: 12px 16px;
       background: linear-gradient(135deg, #38b2ac, #319795);
       color: white;
@@ -33,14 +33,14 @@
     }
 
     .judul-emg {
-      font-size: 16px;
+      font-size: 23px;
       font-weight: 600;
       letter-spacing: 1px;
       margin-bottom: 6px;
     }
 
     .nilai-emg {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
     }
 
@@ -127,7 +127,6 @@
             lastEmg = emg;
           }
 
-          // Tampilkan tanggal dan EMG terbaru
           if (tanggal) {
             tanggalElem.textContent = `📅 Date: ${tanggal}`;
           }
@@ -135,7 +134,6 @@
             emgElem.textContent = lastEmg;
           }
 
-          // Update grafik
           chart.data.labels = labels;
           chart.data.datasets[0].data = values;
           chart.update();
